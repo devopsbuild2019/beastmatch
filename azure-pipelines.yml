@@ -21,21 +21,22 @@ steps:
   inputs:
     provProfileSecureFile: 'f720023d-d237-4c73-8794-caaa5fdea9c8'
 
-- task: Xcode@5
-  displayName: 'Xcode test'
-  inputs:
-    actions: 'test'
-    configuration: 'Debug'
-    sdk: 'iphonesimulator'
-    scheme: 'BeastMatchTests'
-#    signingOption: 'default'
-    destinationPlatformOption: 'iOS'
-    publishJUnitResults: true
+#- task: Xcode@5
+#  displayName: 'Xcode test'
+#  inputs:
+#    actions: 'test'
+#    configuration: 'Debug'
+#    sdk: 'iphonesimulator'
+#    scheme: 'BeastMatchTests'
+#    destinationPlatformOption: 'iOS'
+#    publishJUnitResults: true
 
 - task: Xcode@5
   displayName: 'Xcode build'
   inputs:
     scheme: 'BeastMatch'
+    configuration: 'Release'
+    sdk: 'iphone'
 
 #- task: CopyFiles@2
 #  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
