@@ -16,7 +16,6 @@ steps:
     certSecureFile: '8c1a7484-f544-456b-b4a4-745606ab3ee4'
     certPwd: '$(certificatePassword)'
 
-steps:
 - task: InstallAppleCertificate@2
   displayName: 'Install a distribution certificate'
   inputs:
