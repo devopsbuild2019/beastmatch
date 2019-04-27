@@ -27,7 +27,6 @@ steps:
   inputs:
     provProfileSecureFile: 'f720023d-d237-4c73-8794-caaa5fdea9c8'
 
-steps:
 - task: InstallAppleProvisioningProfile@1
   displayName: 'Install a development provisioning profile'
   inputs:
