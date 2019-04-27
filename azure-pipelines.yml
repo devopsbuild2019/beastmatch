@@ -10,11 +10,11 @@ pool:
   vmImage: 'macOS-10.14'
 
 steps:
-- task: InstallAppleCertificate@2
-  displayName: 'Install a development certificate'
-  inputs:
-    certSecureFile: '8c1a7484-f544-456b-b4a4-745606ab3ee4'
-    certPwd: '$(certificatePassword)'
+#- task: InstallAppleCertificate@2
+#  displayName: 'Install a development certificate'
+#  inputs:
+#    certSecureFile: '8c1a7484-f544-456b-b4a4-745606ab3ee4'
+#    certPwd: '$(certificatePassword)'
 
 - task: InstallAppleCertificate@2
   displayName: 'Install a distribution certificate'
@@ -22,10 +22,10 @@ steps:
     certSecureFile: 'ca90c5a9-bb59-4aee-91ee-f66484de377e'
     certPwd: '$(certificatePassword)'
 
-- task: InstallAppleProvisioningProfile@1
-  displayName: 'Install a development provisioning profile'
-  inputs:
-    provProfileSecureFile: 'f720023d-d237-4c73-8794-caaa5fdea9c8'
+#- task: InstallAppleProvisioningProfile@1
+#  displayName: 'Install a development provisioning profile'
+#  inputs:
+#    provProfileSecureFile: 'f720023d-d237-4c73-8794-caaa5fdea9c8'
 
 - task: InstallAppleProvisioningProfile@1
   displayName: 'Install a development provisioning profile'
@@ -33,15 +33,15 @@ steps:
     provProfileSecureFile: '5da5c23a-c984-45a6-af0f-4abf261ae0dc'
 
 
-#- task: Xcode@5
-#  displayName: 'Xcode test'
-#  inputs:
-#    actions: 'test'
-#    configuration: 'Debug'
-#    sdk: 'iphonesimulator'
-#    scheme: 'BeastMatchTests'
-#    destinationPlatformOption: 'iOS'
-#    publishJUnitResults: true
+- task: Xcode@5
+  displayName: 'Xcode test'
+  inputs:
+    actions: 'test'
+    configuration: 'Debug'
+    sdk: 'iphonesimulator'
+    scheme: 'BeastMatchTests'
+    destinationPlatformOption: 'iOS'
+    publishJUnitResults: true
 
 - task: Xcode@5
   displayName: 'Xcode build'
