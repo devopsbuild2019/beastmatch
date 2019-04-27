@@ -36,7 +36,7 @@ steps:
   inputs:
     scheme: 'BeastMatch'
     configuration: 'Release'
-    sdk: 'iphone'
+    sdk: 'iphoneos'
 
 #- task: CopyFiles@2
 #  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
