@@ -50,7 +50,9 @@ steps:
     configuration: 'Release'
     sdk: 'iphoneos'
     packageApp: true
-    signingOption: 'default'
+    signingOption: 'manual'
+    provisioningProfileUuid: '66ea39f2-6cdf-4163-8029-f1137cbdac73'
+
 
 #- task: CopyFiles@2
 #  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
