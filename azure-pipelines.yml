@@ -7,27 +7,63 @@ trigger:
 - master
 
 pool:
-  vmImage: 'macOS-10.13'
+  vmImage: 'macOS-10.14'
 
 steps:
-#- task: InstallAppleCertificate@2
-#  displayName: 'Install certificate'
-#  inputs:
-#    certSecureFile: '25bf82ac-81ed-483e-bf56-1362c4fada37'
-#    certPwd: '$(certPassword)'
-#
-#- task: InstallAppleProvisioningProfile@1
-#  displayName: 'Install provisioning profile'
-#  inputs:
-#    provProfileSecureFile: 'b43e1c69-355e-4b3a-a017-34b1c2a237aa'
+- task: InstallAppleCertificate@2
+  displayName: 'Install an Apple certificate'
+  inputs:
+    certSecureFile: '8c1a7484-f544-456b-b4a4-745606ab3ee4'
+    certPwd: '$(certificatePassword)'
+
+- task: InstallAppleProvisioningProfile@1
+  displayName: 'Install an Apple provisioning profile'
+  inputs:
+    provProfileSecureFile: 'f720023d-d237-4c73-8794-caaa5fdea9c8'
 
 - task: Xcode@5
+  displayName: 'Xcode test'
   inputs:
     actions: 'test'
-    configuration: 'build-for-test'
-    sdk: 'iphoneos' 
-    xcWorkspacePath: '**/*.xcodeproj/project.xcworkspace'
-    xcodeVersion: 'default'
-    signingOption: 'default'
+    configuration: 'Debug'
+    sdk: 'iphonesimulator'
+    scheme: 'BeastMatchTests'
+#    signingOption: 'default'
     destinationPlatformOption: 'iOS'
     publishJUnitResults: true
+
+- task: Xcode@5
+  displayName: 'Xcode build'
+  inputs:
+    scheme: 'BeastMatch'
+
+#- task: CopyFiles@2
+#  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+#  inputs:
+#    SourceFolder: '$(system.defaultworkingdirectory)'
+#    Contents: '**/*.ipa'
+#    TargetFolder: '$(build.artifactstagingdirectory)'
+#  condition: succeededOrFailed()
+#
+#- task: PublishBuildArtifacts@1
+#  displayName: 'Publish Artifact: drop'
+#  inputs:
+#    PathtoPublish: '$(build.artifactstagingdirectory)'
+#  condition: succeededOrFailed()
+#
+#- task: AppCenterTest@1
+#  displayName: 'Test with Visual Studio App Center'
+#  inputs:
+#    appFile: '**/*.ipa'
+#  enabled: false
+#  condition: succeededOrFailed()
+#
+#- task: AppCenterDistribute@2
+#  displayName: 'Deploy **/*.ipa to Visual Studio App Center'
+#  inputs:
+#    appFile: '**/*.ipa'
+#    symbolsIncludeParentDirectory: false
+#  enabled: false
+#  condition: succeededOrFailed()
+
+
