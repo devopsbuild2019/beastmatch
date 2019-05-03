@@ -1,0 +1,72 @@
+trigger:
+- master
+
+stages:
+- stage: test
+  displayName: Test
+  jobs:
+  - job: build_test
+    displayName: 'Test'
+    pool:
+      vmImage: 'macos-latest'
+    steps:
+    - task: Xcode@5
+      displayName: 'Test'
+      inputs:
+        actions: 'test'
+        configuration: '$(TestConfiguration)'
+        sdk: '$(TestSDK)'
+        scheme: 'BeastMatchTests'
+        destinationPlatformOption: 'iOS'
+        publishJUnitResults: true
+
+- stage: appcenter
+  displayName: Deploy to AppCenter
+  jobs:
+  - job: appcenter
+    displayName: 'Deploy to AppCenter'
+    pool:
+      vmImage: 'macos-latest'
+    steps:
+    - task: InstallAppleCertificate@2
+      displayName: 'Install an Apple certificate'
+      inputs:
+        certSecureFile: 'ios_dist_2.p12'
+        certPwd: '$(certificatePassword)'
+
+    - task: InstallAppleProvisioningProfile@1
+      displayName: 'Install an Apple provisioning profile'
+      inputs:
+        provProfileSecureFile: 'App_Store_Distribution.mobileprovision'
+
+    - task: Xcode@5
+      displayName: 'Test'
+      inputs:
+        actions: 'test'
+        configuration: '$(TestConfiguration)'
+        sdk: '$(TestSDK)'
+        scheme: 'BeastMatchTests'
+        destinationPlatformOption: 'iOS'
+        publishJUnitResults: true
+
+    - task: Xcode@5
+      displayName: 'Release Build'
+      inputs:
+        actions: 'build'
+        scheme: 'BeastMatch'
+        configuration: '$(Configuration)'
+        sdk: '$(SDK)'
+        packageApp: true
+        signingOption: 'manual'
+        provisioningProfileUuid: '66ea39f2-6cdf-4163-8029-f1137cbdac73'
+
+    - task: AppCenterDistribute@3
+      displayName: 'Deploy to AppCenter'
+      inputs:
+        serverEndpoint: 'appcenter'
+        appSlug: 'devopsbuild2019/beastmatch'
+        appFile: '**/*.ipa'
+        symbolsIncludeParentDirectory: false
+        releaseNotesOption: 'input'
+        releaseNotesInput: 'Canary / continuous integration build.'
+        isSilent: false
