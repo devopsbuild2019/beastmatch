@@ -18,7 +18,7 @@ class BeastMatchUITests: XCTestCase {
     override func tearDown() {
     }
 
-    func testDoubleTapOnTileIsIgnored() {
+    fun testDoubleTapOnTileIsIgnored() {
         XCTAssert(app.buttons["0"].label == "Hidden")
 
         app.buttons["0"].tap()
