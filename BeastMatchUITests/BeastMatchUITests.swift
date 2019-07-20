@@ -4,7 +4,7 @@
 
 import XCTest
 
-class BeastMatchUITests: XCTestCase {
+class BeastMatchUITests: XCase {
     var app: XCUIApplication!
 
     override func setUp() {
